@@ -1,5 +1,6 @@
 extends RigidBody2D
 
+const scene_scoretext := preload("res://Scenes/Scoretext.tscn")
 onready var Game = get_node("/root/Game")
 var wait := 0.0
 var target_veloc := Vector2()
@@ -52,13 +53,12 @@ func _physics_process(delta):
 		if wait <= 0.0:
 			do_set_veloc = true
 	$Particles2D.emitting = wait <= 0.0 and not stuck
-	if position.y > get_viewport().get_size_override().y + 32.0:
+	if position.y > get_viewport().get_size_override().y + 32.0 and not stuck:
 		Game.change_lives(-1)
 		queue_free()
 	position.x = clamp(position.x, 0+6.0, 1024.0-6.0)
 	if position.y < 6.0:
 		position.y = 6.0
-	print(position)
 
 func _on_Ball_body_entered(body: PhysicsBody2D):
 	if stuck:
@@ -71,13 +71,18 @@ func _on_Ball_body_entered(body: PhysicsBody2D):
 		body.do_anim()
 	elif body.is_in_group("Tiles"):
 		Game.change_score(body.points)
+		var scoretext := scene_scoretext.instance()
+		scoretext.set_amount(body.points)
+		scoretext.position = body.global_position
+		get_parent().add_child(scoretext)
 		body.impact(global_position)
 		speed = clamp(speed + INC_SPEED, BASE_SPEED, MAX_SPEED)
 		$SndTileBreak.play()
+		Game.add_screenshake(0.15)
 	$SndBounce.play()
 
 func shoot():
-	apply_impulse(Vector2(0, 0), Vector2(-200, -200))
+	apply_impulse(Vector2(0, 0), Vector2(0, -200))
 	$Particles2D.emitting = true
 	stuck = false
 	wait = 0.0

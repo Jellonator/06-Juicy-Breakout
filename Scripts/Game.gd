@@ -8,6 +8,9 @@ var scatter := 0.0
 var new_ball = preload("res://Scenes/Ball.tscn")
 onready var bg_mat := $Polygon2D.material as ShaderMaterial
 
+func add_screenshake(amount: float):
+	$Camera.add_trauma(amount)
+
 func _ready():
 	randomize()
 	$Score.update_score(score)
@@ -31,6 +34,7 @@ func change_lives(l):
 	scatter = 1.0
 	$SndLoss.play()
 	$Lives.update_lives(lives)
+	$Camera.add_trauma(1.0)
 	#if there are no more lives show the game over screen
 	if lives <= 0:
 		get_tree().change_scene("res://Scenes/GameOver.tscn")

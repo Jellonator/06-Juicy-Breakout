@@ -5,6 +5,18 @@ const scene_break := preload("res://Scenes/BrickBroken.tscn")
 var points = 10
 const DIV_X := 4
 const DIV_Y := 2
+onready var original_position = self.global_position
+
+func _ready():
+	global_position = global_position - Vector2(0, rand_range(600.0, 1200.0))
+
+func _physics_process(delta):
+	var speed = delta * 800
+	var diff = original_position - global_position
+	if diff.length() < speed:
+		global_position = original_position
+	else:
+		global_position += diff.normalized() * speed
 
 func impact(frompos: Vector2):
 	var sprite := $Sprite

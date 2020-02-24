@@ -34,7 +34,7 @@ void fragment()
 	float value = mod(offset + UV.x*10.0 + UV.y + ycut, 1.0);
 	if (value > 0.5)
 	{
-		COLOR = vec4(0.0, 0.3, 0.4, 1.0);
+		COLOR = vec4(0.0, 0.15, 0.2, 1.0);
 	}
 	else
 	{
