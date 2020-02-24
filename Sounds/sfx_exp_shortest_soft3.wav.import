@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/sfx_exp_shortest_soft3.wav-81e604ac08ce0432ce0ce3271d5a22f5.sample"
+
+[deps]
+
+source_file="res://Sounds/sfx_exp_shortest_soft3.wav"
+dest_files=[ "res://.import/sfx_exp_shortest_soft3.wav-81e604ac08ce0432ce0ce3271d5a22f5.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

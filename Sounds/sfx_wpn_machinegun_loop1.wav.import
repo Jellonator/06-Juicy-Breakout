@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/sfx_wpn_machinegun_loop1.wav-4e1cf1f0923c251c6cb7e91d03516a8f.sample"
+
+[deps]
+
+source_file="res://Sounds/sfx_wpn_machinegun_loop1.wav"
+dest_files=[ "res://.import/sfx_wpn_machinegun_loop1.wav-4e1cf1f0923c251c6cb7e91d03516a8f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

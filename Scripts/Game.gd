@@ -3,9 +3,10 @@ extends Node2D
 export var lives = 3
 export var score = 0
 var max_score = 0
+var scatter := 0.0
 
 var new_ball = preload("res://Scenes/Ball.tscn")
-
+onready var bg_mat := $Polygon2D.material as ShaderMaterial
 
 func _ready():
 	randomize()
@@ -13,6 +14,10 @@ func _ready():
 	$Lives.update_lives(lives)
 	for tile in get_tree().get_nodes_in_group("Tiles"):
 		max_score += tile.points
+
+func _physics_process(delta):
+	scatter = clamp(scatter - delta * 1.0, 0.0, 1.0)
+	bg_mat.set_shader_param("Scatter", scatter)
 
 func change_score(s):
 	score += s
@@ -23,6 +28,8 @@ func change_score(s):
 
 func change_lives(l):
 	lives += l
+	scatter = 1.0
+	$SndLoss.play()
 	$Lives.update_lives(lives)
 	#if there are no more lives show the game over screen
 	if lives <= 0:

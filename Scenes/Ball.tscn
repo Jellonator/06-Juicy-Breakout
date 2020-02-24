@@ -1,8 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scripts/Ball.gd" type="Script" id=1]
 [ext_resource path="res://Graphics/ball.png" type="Texture" id=2]
 [ext_resource path="res://Graphics/balltrail.png" type="Texture" id=3]
+[ext_resource path="res://Sounds/sfx_sounds_impact14.wav" type="AudioStream" id=4]
+[ext_resource path="res://Sounds/sfx_wpn_machinegun_loop1.wav" type="AudioStream" id=5]
+[ext_resource path="res://Sounds/sfx_weapon_shotgun1.wav" type="AudioStream" id=6]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
@@ -62,10 +65,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 1 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( 0, 0 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Gfx/Sprite:scale")
@@ -74,10 +77,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 1 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0.5, 0.5 ) ]
+"values": [ Vector2( 0.5, 0.5 ), Vector2( 0.5, 0.5 ) ]
 }
 
 [node name="Ball" type="RigidBody2D" groups=[
@@ -108,7 +111,7 @@ process_material = SubResource( 5 )
 texture = ExtResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-playback_speed = 2.0
+playback_speed = 4.0
 anims/bounce = SubResource( 6 )
 anims/cool = SubResource( 7 )
 
@@ -117,4 +120,13 @@ anims/cool = SubResource( 7 )
 [node name="Sprite" type="Sprite" parent="Gfx"]
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
+
+[node name="SndPaddleBounce" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
+
+[node name="SndBounce" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )
+
+[node name="SndTileBreak" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
 [connection signal="body_entered" from="." to="." method="_on_Ball_body_entered"]

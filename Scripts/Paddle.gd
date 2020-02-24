@@ -15,6 +15,7 @@ func _physics_process(delta):
 	position = Vector2(target, position.y)
 	if get_tree().get_nodes_in_group("ball").size() == 0:
 		ball = scene_ball.instance() as RigidBody2D
+		ball.position = node_position.global_position
 		ball.mode = RigidBody2D.MODE_KINEMATIC
 		get_parent().add_child(ball)
 	if ball != null:
@@ -23,3 +24,8 @@ func _physics_process(delta):
 			ball.mode = RigidBody2D.MODE_CHARACTER
 			ball.shoot()
 			ball = null
+			do_anim()
+
+func do_anim():
+	$AnimationPlayer.stop()
+	$AnimationPlayer.play("bounce")

@@ -1,5 +1,16 @@
 # 06-Juicy-Breakout
 
+Things I did:
+ - Gave bricks a color and texture
+ - Ball direction depends on where it hits the paddle
+ - Ball is shown on top of the paddle when it is being shot
+ - Bricks explode into particles when broken
+ - The ball has a bounce animation
+ - The ball now has a comet trail
+ - Added background w/ shader
+ - Added sound effects
+ - The ball's speed is controlled; it starts at 400px/s and increases speed by 10px/s for each brick broken, up to a maximum of 1000px/s.
+
 This is an opportunity for you to implement some of the "juicy" features as demonstrated in the 2012 GDC presentation, "Juice it or Lose it."
 
 I have provided a simple, generic brick breaker game, built in Godot. You can use the presentation as a guide or use your own imagination, but your assignment is to make the game feel more "juicy": kinetic, reactive, physical.
