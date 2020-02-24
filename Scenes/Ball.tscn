@@ -1,21 +1,92 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/Ball.gd" type="Script" id=1]
+[ext_resource path="res://Graphics/ball.png" type="Texture" id=2]
+[ext_resource path="res://Graphics/balltrail.png" type="Texture" id=3]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
 bounce = 1.0
 
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 8, 8 )
+[sub_resource type="CircleShape2D" id=2]
+radius = 14.0
 
-[node name="Ball" type="RigidBody2D"]
-editor/display_folded = true
-position = Vector2( 544, 488 )
-mode = 2
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -1.45469, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+trail_divisor = 10
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 0.45
+scale_curve = SubResource( 4 )
+
+[sub_resource type="Animation" id=6]
+resource_name = "bounce"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Gfx/Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.5, 0.5 ), Vector2( 0.625, 0.21875 ), Vector2( 0.625, 0.21875 ), Vector2( 0.34375, 0.5625 ), Vector2( 0.34375, 0.5625 ), Vector2( 0.5, 0.5 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Gfx/Sprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 7 ), Vector2( 0, 7 ), Vector2( 7.15256e-07, -4 ), Vector2( 7.15256e-07, -4 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "cool"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Gfx/Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Gfx/Sprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.5, 0.5 ) ]
+}
+
+[node name="Ball" type="RigidBody2D" groups=[
+"ball",
+]]
+mode = 3
 physics_material_override = SubResource( 1 )
 gravity_scale = 0.0
-linear_velocity = Vector2( 200, -200 )
+custom_integrator = true
 linear_damp = 0.0
 angular_damp = 0.0
 script = ExtResource( 1 )
@@ -23,11 +94,27 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="ColorRect" type="ColorRect" parent="."]
-margin_left = -8.0
-margin_top = -8.0
-margin_right = 8.0
-margin_bottom = 8.0
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )
+
+[node name="Particles2D" type="Particles2D" parent="."]
+show_behind_parent = true
+emitting = false
+amount = 300
+lifetime = 0.5
+local_coords = false
+draw_order = 1
+process_material = SubResource( 5 )
+texture = ExtResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_speed = 2.0
+anims/bounce = SubResource( 6 )
+anims/cool = SubResource( 7 )
+
+[node name="Gfx" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Gfx"]
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+[connection signal="body_entered" from="." to="." method="_on_Ball_body_entered"]

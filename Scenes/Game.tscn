@@ -1,14 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=1]
-[ext_resource path="res://Scripts/Paddle.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Paddle.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Tile.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/Score.gd" type="Script" id=4]
 [ext_resource path="res://Scripts/Lives.gd" type="Script" id=5]
-[ext_resource path="res://Scripts/Starting.gd" type="Script" id=6]
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 72, 16 )
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
@@ -17,21 +13,7 @@ script = ExtResource( 1 )
 anchor_mode = 0
 current = true
 
-[node name="Paddle" type="KinematicBody2D" parent="."]
-position = Vector2( 544, 552 )
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="ColorRect" type="ColorRect" parent="Paddle"]
-margin_left = -72.0
-margin_top = -16.0
-margin_right = 72.0
-margin_bottom = 16.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle"]
-shape = SubResource( 1 )
+[node name="Paddle" parent="." instance=ExtResource( 2 )]
 
 [node name="Wall" type="StaticBody2D" parent="."]
 
@@ -41,6 +23,7 @@ polygon = PoolVector2Array( 0, 632, 0, 0, 1024, 0, 1024, 632, 1064, 632, 1064, -
 [node name="Tiles" type="Node2D" parent="."]
 
 [node name="Tile Row 1" type="Node2D" parent="Tiles"]
+modulate = Color( 0.2, 0.2, 1, 1 )
 
 [node name="Tile" parent="Tiles/Tile Row 1" instance=ExtResource( 3 )]
 position = Vector2( 184, 296 )
@@ -73,6 +56,7 @@ position = Vector2( 760, 296 )
 position = Vector2( 832, 296 )
 
 [node name="Tile Row 2" type="Node2D" parent="Tiles"]
+modulate = Color( 0, 1, 0, 1 )
 
 [node name="Tile" parent="Tiles/Tile Row 2" instance=ExtResource( 3 )]
 position = Vector2( 184, 256 )
@@ -105,6 +89,7 @@ position = Vector2( 760, 256 )
 position = Vector2( 832, 256 )
 
 [node name="Tile Row 3" type="Node2D" parent="Tiles"]
+modulate = Color( 1, 1, 0, 1 )
 
 [node name="Tile" parent="Tiles/Tile Row 3" instance=ExtResource( 3 )]
 position = Vector2( 184, 216 )
@@ -137,6 +122,7 @@ position = Vector2( 760, 216 )
 position = Vector2( 832, 216 )
 
 [node name="Tile Row 4" type="Node2D" parent="Tiles"]
+modulate = Color( 1, 0.579667, 0.03, 1 )
 
 [node name="Tile" parent="Tiles/Tile Row 4" instance=ExtResource( 3 )]
 position = Vector2( 184, 176 )
@@ -169,6 +155,7 @@ position = Vector2( 760, 176 )
 position = Vector2( 832, 176 )
 
 [node name="Tile Row 5" type="Node2D" parent="Tiles"]
+modulate = Color( 0.93, 0.186, 0.186, 1 )
 
 [node name="Tile" parent="Tiles/Tile Row 5" instance=ExtResource( 3 )]
 position = Vector2( 184, 136 )
@@ -215,14 +202,3 @@ margin_right = 1006.0
 margin_bottom = 30.0
 text = "Lives:"
 script = ExtResource( 5 )
-
-[node name="Starting" type="Label" parent="."]
-margin_right = 1024.0
-margin_bottom = 112.0
-align = 1
-valign = 1
-script = ExtResource( 6 )
-
-[node name="Timer" type="Timer" parent="Starting"]
-wait_time = 10.0
-[connection signal="timeout" from="Starting/Timer" to="Starting" method="_on_Timer_timeout"]
